@@ -10,4 +10,6 @@ I am trying to learn `Golang` (Go) at the same time and now i will put everythin
 
 Since i am already aware on how to host **Serverless** apps on **AWS** and **Azure**, this time i will be trying out **Google Cloud Platform**.
 
-Soon enough i will be testing out Docker which i have learned the fundamentals from **IBM**'s Online Course which will then i will test out their service.
+Soon enough i will be testing out **Docker** which i have learned the **fundamentals** from **IBM**'s Online Course which will then i will test out their service.
+
+Hoping for the Best!
