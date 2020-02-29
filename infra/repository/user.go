@@ -15,6 +15,6 @@ func NewUserRepository(ctx *db.MainContext) *UserRepository {
 	return &ur
 }
 
-func (ur UserRepository) GetUsers() {
+func (_ur UserRepository) GetUsers() {
 
 }
