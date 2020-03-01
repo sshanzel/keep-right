@@ -5,16 +5,25 @@ import (
 	"github.com/sshanzel/keep-right/infra/db"
 )
 
+// UserRepository is the handle for User Queries
 type UserRepository struct {
-	context *db.MainContext
+	ctx *db.MainContext
 }
 
-func NewUserRepository(ctx *db.MainContext) *UserRepository {
-	ur := UserRepository{context: ctx}
+// NewUserRepository creates a new instance of the Repository
+func NewUserRepository(_ctx *db.MainContext) *UserRepository {
+	ur := UserRepository{ctx: _ctx}
 
 	return &ur
 }
 
-func (_ur UserRepository) GetUsers() {
+// GetUsers fetches all Users in the database
+func (_ur UserRepository) GetUsers() (users []entities.User) {
+	err := _ur.ctx.DB.Model(&users)
 
+	if err != nil {
+		panic(err)
+	}
+
+	return
 }
