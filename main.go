@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/sshanzel/keep-right/infra/db"
 	"github.com/sshanzel/keep-right/infra/repository"
 
 	"github.com/labstack/echo"
@@ -23,8 +22,7 @@ func main() {
 }
 
 func hello(c echo.Context) error {
-	ctx := db.Connect()
-	users := repository.NewUserRepository(ctx)
+	users := repository.NewUserRepository()
 
 	fmt.Println(users)
 

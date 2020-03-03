@@ -6,7 +6,7 @@ import (
 
 // User information
 type User struct {
-	ID        uuid.UUID
+	ID        uuid.UUID `sql:",type:uuid"`
 	Firstname string
 	Lastname  string
 	Email     string

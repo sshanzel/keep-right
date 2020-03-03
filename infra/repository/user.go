@@ -11,15 +11,15 @@ type UserRepository struct {
 }
 
 // NewUserRepository creates a new instance of the Repository
-func NewUserRepository(_ctx *db.MainContext) *UserRepository {
-	ur := UserRepository{ctx: _ctx}
+func NewUserRepository() *UserRepository {
+	ur := UserRepository{ctx: db.Connect()}
 
 	return &ur
 }
 
 // GetUsers fetches all Users in the database
 func (_ur UserRepository) GetUsers() (users []entities.User) {
-	err := _ur.ctx.DB.Model(&users)
+	err := _ur.ctx.DB.Model(&users).Select()
 
 	if err != nil {
 		panic(err)

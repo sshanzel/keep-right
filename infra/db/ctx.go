@@ -18,22 +18,26 @@ type MainContext struct {
 	DB *pg.DB
 }
 
+var connection *MainContext
+
 // Connect opens the connection on the database and returns a Context
 func Connect() *MainContext {
-	_db := pg.Connect(&pg.Options{
-		User:     "postgres",
-		Password: "dr0w$$Ap",
-		Database: "keep-right",
-	})
+	if connection == nil {
+		db := pg.Connect(&pg.Options{
+			User:     "postgres",
+			Password: "dr0w$$Ap",
+			Database: "keep-right",
+		})
+
+		connection = &MainContext{DB: db}
+	}
 
 	// err := createSchema(_db)
 	// if err != nil {
 	// 	panic(err)
 	// }
 
-	ctx := MainContext{DB: _db}
-
-	return &ctx
+	return connection
 }
 
 func createSchema(db *pg.DB) error {
