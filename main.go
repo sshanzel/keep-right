@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/sshanzel/keep-right/domain/entities"
 	"github.com/sshanzel/keep-right/infra/repository"
 
 	"github.com/labstack/echo"
@@ -22,9 +23,13 @@ func main() {
 }
 
 func hello(c echo.Context) error {
-	users := repository.NewUserRepository()
+	_usersRepo := repository.NewUserRepository()
 
-	fmt.Println(users)
+	newUser := entities.NewUser("test", "sample", "email@sample.com")
+
+	_usersRepo.CreateUser(newUser)
+
+	fmt.Println(newUser)
 
 	return c.String(http.StatusOK, "Hello!")
 }

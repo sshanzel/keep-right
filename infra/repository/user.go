@@ -27,3 +27,14 @@ func (_ur UserRepository) GetUsers() (users []entities.User) {
 
 	return
 }
+
+// CreateUser returns the user with its ID and creates an item in the DB
+func (_ur UserRepository) CreateUser(user *entities.User) *entities.User {
+	err := _ur.ctx.DB.Insert(user)
+
+	if err != nil {
+		panic(err)
+	}
+
+	return user
+}
