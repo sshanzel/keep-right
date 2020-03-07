@@ -53,8 +53,8 @@ func (_sr SomethingRepository) GetSomethings() (somethings []*entities.Something
 
 // GetSomethingsOfUser returns all Something of the specified User
 func (_sr SomethingRepository) GetSomethingsOfUser(userID uuid.UUID) (somethings []*entities.Something) {
-	user := &entities.User{ID: userID}
-	err := _sr.ctx.DB.Model(&somethings).Select(user)
+	something := &entities.Something{CreatedByID: userID}
+	err := _sr.ctx.DB.Model(&somethings).Select(something)
 
 	if err != nil {
 		panic(err)
