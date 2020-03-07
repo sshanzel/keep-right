@@ -21,6 +21,13 @@ type SomethingRepository struct {
 	ctx *db.MainContext
 }
 
+// NewSomethingRepository creates a new instance of the Repository
+func NewSomethingRepository() *SomethingRepository {
+	sr := SomethingRepository{ctx: db.Connect()}
+
+	return &sr
+}
+
 // GetSomething fetches the user based on PK UUID
 func (_sr SomethingRepository) GetSomething(id uuid.UUID) *entities.Something {
 	something := &entities.Something{ID: id}
@@ -31,13 +38,6 @@ func (_sr SomethingRepository) GetSomething(id uuid.UUID) *entities.Something {
 	}
 
 	return something
-}
-
-// NewSomethingRepository creates a new instance of the Repository
-func NewSomethingRepository() *SomethingRepository {
-	sr := SomethingRepository{ctx: db.Connect()}
-
-	return &sr
 }
 
 // GetSomethings fetches all Something

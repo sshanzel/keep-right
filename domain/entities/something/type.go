@@ -11,12 +11,12 @@ type Type struct {
 	Title       string
 	Description string
 	CreatedByID uuid.UUID `pg:",type: uuid"`
-	CreatedBy   entities.User
+	CreatedBy   *entities.User
 }
 
 // NewType creates a new Type of Something
 func NewType(title, description string, createdByID uuid.UUID) *Type {
-	t := Type{uuid.New(), title, description, createdByID}
+	t := Type{uuid.New(), title, description, createdByID, nil}
 
 	return &t
 }
