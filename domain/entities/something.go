@@ -7,7 +7,7 @@ import (
 
 // Something that you have be it a container or an item
 type Something struct {
-	ID          uuid.UUID `pg:",type: uuid"`
+	ID          uuid.UUID `pg:",type: uuid, pk"`
 	Title       string
 	Description string
 	InsideOfID  uuid.UUID
