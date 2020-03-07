@@ -10,11 +10,12 @@ type User struct {
 	Firstname string
 	Lastname  string
 	Email     string
+	IsAdmin   bool
 }
 
 // NewUser return a new instance of User
 func NewUser(firstname, lastname, email string) *User {
-	u := User{uuid.New(), firstname, lastname, email}
+	u := User{uuid.New(), firstname, lastname, email, false}
 
 	return &u
 }

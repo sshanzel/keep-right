@@ -9,9 +9,30 @@ import (
 	"github.com/go-pg/pg/v9/orm"
 )
 
-var database = os.Getenv("database")
-var dburi = os.Getenv("dburi")
-var connStr = os.Getenv("dbconnstr")
+type connStr struct {
+	Username string
+	Password string
+	Database string
+}
+
+func getConnStr() (conn *connStr) {
+	_username := os.Getenv("db:username")
+	if _username == "" {
+		_username = "postgres"
+	}
+
+	_password := os.Getenv("db:password")
+	if _password == "" {
+		_password = "dr0w$$Ap"
+	}
+
+	_db := os.Getenv("db:database")
+	if _db == "" {
+		_db = "keep-right"
+	}
+
+	return &connStr{_username, _password, _db}
+}
 
 // MainContext handles the database context for main services
 type MainContext struct {
@@ -23,10 +44,11 @@ var connection *MainContext
 // Connect opens the connection on the database and returns a Context
 func Connect() *MainContext {
 	if connection == nil {
+		conn := getConnStr()
 		db := pg.Connect(&pg.Options{
-			User:     "postgres",
-			Password: "dr0w$$Ap",
-			Database: "keep-right",
+			User:     conn.Username,
+			Password: conn.Password,
+			Database: conn.Database,
 		})
 
 		connection = &MainContext{DB: db}

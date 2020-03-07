@@ -19,6 +19,8 @@ func main() {
 
 	e.GET("/", hello)
 
+	e.GET("/Test", helloTest)
+
 	e.Logger.Fatal(e.Start(":2020"))
 }
 
@@ -29,7 +31,19 @@ func hello(c echo.Context) error {
 
 	_usersRepo.CreateUser(newUser)
 
-	fmt.Println(newUser)
+	fmt.Println(*newUser)
 
 	return c.String(http.StatusOK, "Hello!")
+}
+
+func helloTest(c echo.Context) error {
+	_usersRepo := repository.NewUserRepository()
+
+	newUser := entities.NewUser("test", "sample", "email@sample.com")
+
+	_usersRepo.CreateUser(newUser)
+
+	fmt.Println(*newUser)
+
+	return c.String(http.StatusOK, "Hello! Test")
 }

@@ -18,7 +18,7 @@ func NewUserRepository() *UserRepository {
 }
 
 // GetUsers fetches all Users in the database
-func (_ur UserRepository) GetUsers() (users []entities.User) {
+func (_ur UserRepository) GetUsers() (users []*entities.User) {
 	err := _ur.ctx.DB.Model(&users).Select()
 
 	if err != nil {
@@ -37,4 +37,22 @@ func (_ur UserRepository) CreateUser(user *entities.User) *entities.User {
 	}
 
 	return user
+}
+
+// UpdateUser saves the changes for the specified User
+func (_ur UserRepository) UpdateUser(user *entities.User) {
+	err := _ur.ctx.DB.Update(user)
+
+	if err != nil {
+		panic(err)
+	}
+}
+
+// DeleteUser removes the specified User in DB
+func (_ur UserRepository) DeleteUser(user *entities.User) {
+	err := _ur.ctx.DB.Delete(user)
+
+	if err != nil {
+		panic(err)
+	}
 }
