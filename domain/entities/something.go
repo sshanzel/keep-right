@@ -9,9 +9,9 @@ type Something struct {
 	ID          uuid.UUID `pg:",type: uuid, pk"`
 	Title       string
 	Description string
-	InsideOfID  uuid.UUID `pg:",type: uuid, pk"`
+	InsideOfID  uuid.UUID `pg:",type: uuid"`
 	InsideOf    *Something
-	SomeTypeID  uuid.UUID `pg:",type: uuid, pk"`
+	SomeTypeID  uuid.UUID `pg:",type: uuid"`
 	SomeType    *SomeType
 	CreatedByID uuid.UUID `pg:",type: uuid"`
 	CreatedBy   *User

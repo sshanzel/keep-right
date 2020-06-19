@@ -51,23 +51,24 @@ func Connect() *MainContext {
 			Database: conn.Database,
 		})
 
+		err := createSchema(db)
+		if err != nil {
+			panic(err)
+		}
+
 		connection = &MainContext{DB: db}
 	}
-
-	// err := createSchema(_db)
-	// if err != nil {
-	// 	panic(err)
-	// }
 
 	return connection
 }
 
 func createSchema(db *pg.DB) error {
-	for _, model := range []interface{}{(*entities.User)(nil), (*entities.Something)(nil)} {
-		err := db.CreateTable(model, &orm.CreateTableOptions{})
-		if err != nil {
-			return err
-		}
+	// err := db.CreateTable(model, &orm.CreateTableOptions{})
+	err := db.CreateTable(&entities.User{}, &orm.CreateTableOptions{})
+	err = db.CreateTable(&entities.SomeType{}, &orm.CreateTableOptions{})
+	err = db.CreateTable(&entities.Something{}, &orm.CreateTableOptions{})
+	if err != nil {
+		return err
 	}
 	return nil
 }

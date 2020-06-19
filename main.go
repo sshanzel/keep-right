@@ -6,6 +6,7 @@ import (
 
 	"github.com/sshanzel/keep-right/domain/entities"
 	"github.com/sshanzel/keep-right/infra/repository"
+	"github.com/sshanzel/update-right/app/handlers"
 
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
@@ -17,9 +18,7 @@ func main() {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
-	e.GET("/", hello)
-
-	e.GET("/Test", helloTest)
+	e.GET("/", handlers.GetUsers())
 
 	e.Logger.Fatal(e.Start(":2020"))
 }

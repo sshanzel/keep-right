@@ -11,11 +11,14 @@ type User struct {
 	Lastname  string
 	Email     string
 	IsAdmin   bool
+
+	Somethings []Something `pg:"fk:CreatedByID"`
+	SomeTypes  []SomeType  `pg:"fk:CreatedByID"`
 }
 
 // NewUser return a new instance of User
 func NewUser(firstname, lastname, email string) *User {
-	u := User{uuid.New(), firstname, lastname, email, false}
+	u := User{uuid.New(), firstname, lastname, email, false, nil, nil}
 
 	return &u
 }

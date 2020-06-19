@@ -8,6 +8,6 @@ require (
 	github.com/google/uuid v1.1.1
 	github.com/labstack/echo v3.3.10+incompatible
 	github.com/lib/pq v1.3.0
-	github.com/sshanzel/update-right v0.0.0-20200221182727-a7cb4febd738 // indirect
+	github.com/sshanzel/update-right v0.0.0-20200221182727-a7cb4febd738
 	go.mongodb.org/mongo-driver v1.3.0
 )
