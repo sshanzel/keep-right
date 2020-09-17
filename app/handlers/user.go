@@ -3,6 +3,7 @@ package handlers
 import (
 	"net/http"
 
+	"github.com/google/uuid"
 	"github.com/labstack/echo"
 	"github.com/sshanzel/keep-right/app/dto"
 	"github.com/sshanzel/keep-right/domain/entities"
@@ -37,7 +38,35 @@ func NewUser(c echo.Context) error {
 	return c.JSON(http.StatusOK, _iurepo.GetUsers())
 }
 
-// GetUsers is the handler for fetching the Users at DB
+// GetUsers returns all users in DB
 func GetUsers(c echo.Context) error {
+	return c.JSON(http.StatusOK, _iurepo.GetUsers())
+}
+
+// GetUser returns user with the specified id (PK)
+func GetUser(c echo.Context) error {
+	id, err := uuid.Parse(c.Param("id"))
+
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, "Invalid ID")
+	}
+
+	user := _iurepo.GetUser(id)
+
+	if user == nil {
+		return c.JSON(http.StatusNotFound, "User doesn't exists")
+	}
+
+	token, err := VerifyToken(c.Request())
+
+	if token.UID != user.UID {
+		return c.JSON(http.StatusForbidden, "Not Allowed")
+	}
+
+	return c.JSON(http.StatusOK, user)
+}
+
+// GetUserByUID returns user with the specified UID from Firebase
+func GetUserByUID(c echo.Context) error {
 	return c.JSON(http.StatusOK, _iurepo.GetUsers())
 }

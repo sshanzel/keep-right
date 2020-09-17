@@ -8,6 +8,7 @@ import (
 
 // IUserRepository is the contract of implementation of UserRepository
 type IUserRepository interface {
+	GetUserByUID(id string) *entities.User
 	GetUser(id uuid.UUID) *entities.User
 	GetUsers() (users []*entities.User)
 	CreateUser(user *entities.User) *entities.User
@@ -27,7 +28,19 @@ func NewUserRepository() *UserRepository {
 	return &ur
 }
 
-// GetUser fetches all Users in the database
+// GetUserByUID returns the user with the specified UID
+func (_ur UserRepository) GetUserByUID(UID string) *entities.User {
+	user := &entities.User{UID: UID}
+	err := _ur.ctx.DB.Select(user)
+
+	if err != nil {
+		panic(err)
+	}
+
+	return user
+}
+
+// GetUser returns the User that matches the ID (PK)
 func (_ur UserRepository) GetUser(id uuid.UUID) *entities.User {
 	user := &entities.User{ID: id}
 	err := _ur.ctx.DB.Select(user)

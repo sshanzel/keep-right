@@ -22,6 +22,7 @@ func main() {
 
 	u.Use(middlewares.Authorize)
 	u.GET("", handlers.GetUsers)
+	u.GET("/:id", handlers.GetUser)
 	u.POST("", handlers.NewUser)
 
 	e.Logger.Fatal(e.Start(":2020"))
