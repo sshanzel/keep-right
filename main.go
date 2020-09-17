@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/sshanzel/keep-right/app/handlers"
+	"github.com/sshanzel/keep-right/app/middlewares"
 	"github.com/sshanzel/keep-right/infra/repository"
 
 	"github.com/labstack/echo"
@@ -19,6 +20,7 @@ func main() {
 	api := e.Group("/api")
 	u := api.Group("/users")
 
+	u.Use(middlewares.Authorize)
 	u.GET("", handlers.GetUsers)
 	u.POST("", handlers.NewUser)
 

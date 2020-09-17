@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/labstack/echo"
@@ -23,22 +22,7 @@ func NewUserHandler(iurepo repository.IUserRepository) {
 
 // NewUser is the handler for fetching the Users at DB
 func NewUser(c echo.Context) error {
-	ctx := GetContext()
-	app, err := GetFirebaseApp()
-
-	if err != nil {
-		return c.JSON(http.StatusInternalServerError, "Unable to initialize Firebase App!")
-	}
-
-	client, err := app.Auth(ctx)
-
-	if err != nil {
-		return c.JSON(http.StatusInternalServerError, "Error getting Auth Client!")
-	}
-
-	tokenID := ExtractToken(c.Request())
-
-	token, err := client.VerifyIDToken(ctx, tokenID)
+	token, err := VerifyToken(c.Request())
 
 	user := new(dto.User)
 
@@ -49,8 +33,6 @@ func NewUser(c echo.Context) error {
 	newUser := entities.NewUser(token.UID, user.Name)
 
 	_iurepo.CreateUser(newUser)
-
-	fmt.Println(*newUser)
 
 	return c.JSON(http.StatusOK, _iurepo.GetUsers())
 }

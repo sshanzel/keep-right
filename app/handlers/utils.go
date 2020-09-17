@@ -1,15 +1,15 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
-	"os"
 	"strings"
 
-	"github.com/dgrijalva/jwt-go"
 	"golang.org/x/net/context"
 
 	firebase "firebase.google.com/go"
+	"firebase.google.com/go/auth"
 
 	"google.golang.org/api/option"
 )
@@ -27,19 +27,23 @@ func ExtractToken(r *http.Request) string {
 }
 
 // VerifyToken checks if the token on the request is valid
-func VerifyToken(r *http.Request) (*jwt.Token, error) {
-	tokenString := ExtractToken(r)
-	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-		//Make sure that the token method conform to "SigningMethodHMAC"
-		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
-		}
-		return []byte(os.Getenv("ACCESS_SECRET")), nil
-	})
+func VerifyToken(r *http.Request) (*auth.Token, error) {
+	ctx := GetContext()
+	app, err := GetFirebaseApp()
+
 	if err != nil {
-		return nil, err
+		return nil, errors.New("Unable to initialize Firebase App")
 	}
-	return token, nil
+
+	client, err := app.Auth(ctx)
+
+	if err != nil {
+		return nil, errors.New("Error getting Auth Client")
+	}
+
+	tokenID := ExtractToken(r)
+
+	return client.VerifyIDToken(ctx, tokenID)
 }
 
 var _app *firebase.App
