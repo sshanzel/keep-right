@@ -53,7 +53,7 @@ func Connect() *MainContext {
 
 		err := createSchema(db)
 		if err != nil {
-			panic(err)
+			// panic(err)
 		}
 
 		connection = &MainContext{DB: db}

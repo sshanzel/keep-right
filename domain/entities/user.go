@@ -6,19 +6,18 @@ import (
 
 // User information
 type User struct {
-	ID        uuid.UUID `pg:",type:uuid, pk"`
-	Firstname string
-	Lastname  string
-	Email     string
-	IsAdmin   bool
+	ID      uuid.UUID `pg:",type:uuid, pk"`
+	UID     string
+	Name    string
+	IsAdmin bool
 
 	Somethings []Something `pg:"fk:CreatedByID"`
 	SomeTypes  []SomeType  `pg:"fk:CreatedByID"`
 }
 
 // NewUser return a new instance of User
-func NewUser(firstname, lastname, email string) *User {
-	u := User{uuid.New(), firstname, lastname, email, false, nil, nil}
+func NewUser(UID, name string) *User {
+	u := User{uuid.New(), UID, name, false, nil, nil}
 
 	return &u
 }
