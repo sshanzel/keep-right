@@ -45,6 +45,19 @@ func GetUsers(c echo.Context) error {
 
 // GetUser returns user with the specified id (PK)
 func GetUser(c echo.Context) error {
+	token, _ := VerifyToken(c.Request())
+
+	user := _iurepo.GetUserByUID(token.UID)
+
+	if user == nil {
+		return c.JSON(http.StatusNotFound, "User doesn't exists")
+	}
+
+	return c.JSON(http.StatusOK, user)
+}
+
+// GetUserByID returns user with the specified id (PK)
+func GetUserByID(c echo.Context) error {
 	id, err := uuid.Parse(c.Param("id"))
 
 	if err != nil {
@@ -64,9 +77,4 @@ func GetUser(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, user)
-}
-
-// GetUserByUID returns user with the specified UID from Firebase
-func GetUserByUID(c echo.Context) error {
-	return c.JSON(http.StatusOK, _iurepo.GetUsers())
 }

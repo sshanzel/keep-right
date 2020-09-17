@@ -31,10 +31,10 @@ func NewUserRepository() *UserRepository {
 // GetUserByUID returns the user with the specified UID
 func (_ur UserRepository) GetUserByUID(UID string) *entities.User {
 	user := &entities.User{UID: UID}
-	err := _ur.ctx.DB.Select(user)
+	err := _ur.ctx.DB.Model(user).Select()
 
 	if err != nil {
-		panic(err)
+		return nil
 	}
 
 	return user
@@ -46,7 +46,7 @@ func (_ur UserRepository) GetUser(id uuid.UUID) *entities.User {
 	err := _ur.ctx.DB.Select(user)
 
 	if err != nil {
-		panic(err)
+		return nil
 	}
 
 	return user
@@ -57,7 +57,7 @@ func (_ur UserRepository) GetUsers() (users []*entities.User) {
 	err := _ur.ctx.DB.Model(&users).Select()
 
 	if err != nil {
-		panic(err)
+		return nil
 	}
 
 	return
