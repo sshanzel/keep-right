@@ -14,7 +14,7 @@ func Authorize(next echo.HandlerFunc) echo.HandlerFunc {
 		_, err := handlers.VerifyToken(c.Request())
 
 		if err != nil {
-			c.JSON(http.StatusUnauthorized, "Invalid Token")
+			c.JSON(http.StatusUnauthorized, err.Error())
 
 			return nil
 		}

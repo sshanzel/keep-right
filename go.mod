@@ -6,8 +6,8 @@ require (
 	cloud.google.com/go/firestore v1.3.0 // indirect
 	cloud.google.com/go/storage v1.11.0 // indirect
 	firebase.google.com/go v3.13.0+incompatible
-	firebase.google.com/go/v4 v4.0.0
-	github.com/dgrijalva/jwt-go v3.2.0+incompatible
+	firebase.google.com/go/v4 v4.0.0 // indirect
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
 	github.com/go-pg/pg v8.0.6+incompatible // indirect
 	github.com/go-pg/pg/v9 v9.1.3
 	github.com/google/uuid v1.1.1

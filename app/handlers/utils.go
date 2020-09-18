@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"os"
 	"strings"
 
 	"golang.org/x/net/context"
@@ -48,7 +49,7 @@ func VerifyToken(r *http.Request) (*auth.Token, error) {
 
 var _app *firebase.App
 var _ctx = context.Background()
-var _path = "C:/Users/hsolevilla/Downloads/jovial-trilogy-268111-firebase-adminsdk-foile-7b0c883342.json"
+var _path = os.Getenv("auth:firebase-sdk")
 
 // GetFirebaseApp returns firebase.App instance
 func GetFirebaseApp() (*firebase.App, error) {
@@ -56,7 +57,12 @@ func GetFirebaseApp() (*firebase.App, error) {
 		return _app, nil
 	}
 
-	opt := option.WithCredentialsFile(_path)
+	path := _path
+	if path == "" {
+		path = "C:/Users/hsolevilla/Downloads/keepright-f3234-firebase-adminsdk-gv928-f26c52ecbd.json"
+	}
+
+	opt := option.WithCredentialsFile(path)
 	app, err := firebase.NewApp(context.Background(), nil, opt)
 
 	if err != nil {
