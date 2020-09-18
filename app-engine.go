@@ -11,7 +11,7 @@ import (
 	"github.com/labstack/echo/middleware"
 )
 
-func main() {
+func createMux() *echo.Echo {
 	handlers.NewUserHandler(repository.NewUserRepository())
 
 	e := echo.New()
@@ -30,5 +30,5 @@ func main() {
 	u.GET("/:id", handlers.GetUserByID)
 	u.POST("", handlers.NewUser)
 
-	e.Logger.Fatal(e.Start(":2020"))
+	return e
 }
