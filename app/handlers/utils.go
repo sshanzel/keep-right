@@ -8,11 +8,10 @@ import (
 	"strings"
 
 	"golang.org/x/net/context"
+	"google.golang.org/api/option"
 
 	firebase "firebase.google.com/go"
 	"firebase.google.com/go/auth"
-
-	"google.golang.org/api/option"
 )
 
 // ExtractToken gets token embedded on the request
@@ -49,7 +48,8 @@ func VerifyToken(r *http.Request) (*auth.Token, error) {
 
 var _app *firebase.App
 var _ctx = context.Background()
-var _path = os.Getenv("auth:firebase-sdk")
+var _env = os.Getenv("GAE_ENV")
+var _path = "C:/Users/hsolevilla/Downloads/keepright-firebase-adminsdk-nc3ok-7dfcf9e1a4.json"
 
 // GetFirebaseApp returns firebase.App instance
 func GetFirebaseApp() (*firebase.App, error) {
@@ -57,21 +57,19 @@ func GetFirebaseApp() (*firebase.App, error) {
 		return _app, nil
 	}
 
-	path := _path
-	if path == "" {
-		path = "C:/Users/hsolevilla/Downloads/keepright-f3234-firebase-adminsdk-gv928-f26c52ecbd.json"
+	var err error
+	if _env == "" {
+		opt := option.WithCredentialsFile(_path)
+		_app, err = firebase.NewApp(context.Background(), nil, opt)
+	} else {
+		_app, err = firebase.NewApp(context.Background(), nil)
 	}
-
-	opt := option.WithCredentialsFile(path)
-	app, err := firebase.NewApp(context.Background(), nil, opt)
 
 	if err != nil {
 		return nil, fmt.Errorf("error initializing app: %v", err)
 	}
 
-	_app = app
-
-	return app, nil
+	return _app, nil
 }
 
 // GetContext returns a Singleton Context

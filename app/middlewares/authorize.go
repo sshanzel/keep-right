@@ -20,7 +20,7 @@ func Authorize(next echo.HandlerFunc) echo.HandlerFunc {
 		}
 
 		if err := next(c); err != nil {
-			c.Error(err)
+			c.JSON(http.StatusInternalServerError, err.Error())
 		}
 
 		return nil
