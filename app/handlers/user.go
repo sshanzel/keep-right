@@ -23,7 +23,7 @@ func NewUserHandler(iurepo repository.IUserRepository) {
 
 // NewUser is the handler for fetching the Users at DB
 func NewUser(c echo.Context) error {
-	token, err := VerifyToken(c.Request())
+	token, err := GetFirebaseToken(c.Request())
 
 	user := new(dto.User)
 
@@ -45,7 +45,7 @@ func GetUsers(c echo.Context) error {
 
 // GetUser returns user with the specified id (PK)
 func GetUser(c echo.Context) error {
-	token, _ := VerifyToken(c.Request())
+	token, _ := GetFirebaseToken(c.Request())
 
 	user := _iurepo.GetUserByUID(token.UID)
 
@@ -70,7 +70,7 @@ func GetUserByID(c echo.Context) error {
 		return c.JSON(http.StatusNotFound, "User doesn't exists")
 	}
 
-	token, err := VerifyToken(c.Request())
+	token, err := GetFirebaseToken(c.Request())
 
 	if token.UID != user.UID {
 		return c.JSON(http.StatusForbidden, "Not Allowed")

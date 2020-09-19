@@ -5,13 +5,16 @@ import (
 
 	"github.com/labstack/echo"
 	"github.com/sshanzel/keep-right/app/handlers"
+	"github.com/sshanzel/keep-right/infra/services"
 )
 
 // Authorize is a middleware to allow access to protected endpoints
 func Authorize(next echo.HandlerFunc) echo.HandlerFunc {
 
 	return func(c echo.Context) error {
-		_, err := handlers.VerifyToken(c.Request())
+		token := handlers.ExtractToken(c.Request())
+
+		_, err := services.VerifyToken(token)
 
 		if err != nil {
 			c.JSON(http.StatusUnauthorized, err.Error())
