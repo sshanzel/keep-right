@@ -10,12 +10,18 @@ import (
 )
 
 type connStr struct {
+	Addr     string
 	Username string
 	Password string
 	Database string
 }
 
 func getConnStr() (conn *connStr) {
+	_addr := os.Getenv("db:addr")
+	if _addr == "" {
+		_addr = ":5432"
+	}
+
 	_username := os.Getenv("db:username")
 	if _username == "" {
 		_username = "postgres"
@@ -31,7 +37,7 @@ func getConnStr() (conn *connStr) {
 		_db = "keep-right"
 	}
 
-	return &connStr{_username, _password, _db}
+	return &connStr{_addr, _username, _password, _db}
 }
 
 // MainContext handles the database context for main services
@@ -46,6 +52,7 @@ func Connect() *MainContext {
 	if connection == nil {
 		conn := getConnStr()
 		db := pg.Connect(&pg.Options{
+			Addr:     conn.Addr,
 			User:     conn.Username,
 			Password: conn.Password,
 			Database: conn.Database,
