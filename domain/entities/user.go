@@ -10,14 +10,11 @@ type User struct {
 	UID     string
 	Name    string
 	IsAdmin bool
-
-	Somethings []Something `pg:"fk:CreatedByID"`
-	SomeTypes  []SomeType  `pg:"fk:CreatedByID"`
 }
 
 // NewUser return a new instance of User
 func NewUser(UID, name string) *User {
-	u := User{uuid.New(), UID, name, false, nil, nil}
+	u := User{uuid.New(), UID, name, false}
 
 	return &u
 }

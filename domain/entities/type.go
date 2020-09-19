@@ -4,8 +4,8 @@ import (
 	"github.com/google/uuid"
 )
 
-// SomeType is the struct for identifying a type of Something
-type SomeType struct {
+// SomethingType is the struct for identifying a type of Something
+type SomethingType struct {
 	ID          uuid.UUID `pg:",type: uuid, pk"`
 	Title       string
 	Description string
@@ -14,8 +14,8 @@ type SomeType struct {
 }
 
 // NewSomeType creates a new Type of Something
-func NewSomeType(title, description string, createdByID uuid.UUID) *SomeType {
-	t := SomeType{uuid.New(), title, description, createdByID, nil}
+func NewSomeType(title, description string, createdByID uuid.UUID) *SomethingType {
+	t := SomethingType{uuid.New(), title, description, createdByID, nil}
 
 	return &t
 }
