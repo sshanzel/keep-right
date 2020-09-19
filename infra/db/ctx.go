@@ -1,9 +1,8 @@
 package db
 
 import (
-	"os"
-
 	"github.com/sshanzel/keep-right/domain/entities"
+	"github.com/sshanzel/keep-right/infra/services"
 
 	"github.com/go-pg/pg/v9"
 	"github.com/go-pg/pg/v9/orm"
@@ -17,27 +16,27 @@ type connStr struct {
 }
 
 func getConnStr() (conn *connStr) {
-	_addr := os.Getenv("db:addr")
-	if _addr == "" {
-		_addr = ":5432"
+	addr := services.GetDbAddr()
+	if addr == "" {
+		addr = ":5432"
 	}
 
-	_username := os.Getenv("db:username")
-	if _username == "" {
-		_username = "postgres"
+	username := services.GetDbAddr()
+	if username == "" {
+		username = "postgres"
 	}
 
-	_password := os.Getenv("db:password")
-	if _password == "" {
-		_password = "dr0w$$Ap"
+	password := services.GetDbAddr()
+	if password == "" {
+		password = "dr0w$$Ap"
 	}
 
-	_db := os.Getenv("db:database")
-	if _db == "" {
-		_db = "keep-right"
+	db := services.GetDbAddr()
+	if db == "" {
+		db = "keep-right"
 	}
 
-	return &connStr{_addr, _username, _password, _db}
+	return &connStr{addr, username, password, db}
 }
 
 // MainContext handles the database context for main services
@@ -72,7 +71,7 @@ func Connect() *MainContext {
 func createSchema(db *pg.DB) error {
 	// err := db.CreateTable(model, &orm.CreateTableOptions{})
 	err := db.CreateTable(&entities.User{}, &orm.CreateTableOptions{})
-	err = db.CreateTable(&entities.SomeType{}, &orm.CreateTableOptions{})
+	err = db.CreateTable(&entities.SomethingType{}, &orm.CreateTableOptions{})
 	err = db.CreateTable(&entities.Something{}, &orm.CreateTableOptions{})
 	if err != nil {
 		return err
