@@ -47,10 +47,10 @@ func GetUsers(c echo.Context) error {
 func GetUser(c echo.Context) error {
 	token, _ := GetFirebaseToken(c.Request())
 
-	user := _iurepo.GetUserByUID(token.UID)
+	user, err := _iurepo.GetUserByUID(token.UID)
 
-	if user == nil {
-		return c.JSON(http.StatusNotFound, "User doesn't exists")
+	if err != nil {
+		return c.JSON(http.StatusNotFound, err.Error())
 	}
 
 	return c.JSON(http.StatusOK, user)

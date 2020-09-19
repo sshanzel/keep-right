@@ -6,55 +6,43 @@ import (
 	"github.com/sshanzel/keep-right/infra/db"
 )
 
-// ISomeTypeRepository is the interface for SomeTypeRepository implementation
-type ISomeTypeRepository interface {
-	GetSomeType(id uuid.UUID) *entities.SomeType
-	GetSomeTypes() (someTypes []*entities.SomeType)
-	GetSomeTypesOfUser(userID uuid.UUID) (someTypes []*entities.SomeType)
-	CreateSomeType(someType entities.SomeType) *entities.SomeType
-	UpdateSomeType(someType entities.SomeType)
-	DeleteSomeType(someType entities.SomeType)
+// ISomethingTypeRepository is the interface for SomethingTypeRepository implementation
+type ISomethingTypeRepository interface {
+	GetSomethingType(id uuid.UUID) *entities.SomethingType
+	GetSomethingTypes() (somethingTypes []*entities.SomethingType)
+	GetSomethingTypesOfUser(userID uuid.UUID) (somethingTypes []*entities.SomethingType)
+	CreateSomethingType(somethingType entities.SomethingType) *entities.SomethingType
+	UpdateSomethingType(somethingType entities.SomethingType)
+	DeleteSomethingType(somethingType entities.SomethingType)
 }
 
-// SomeTypeRepository is the handle for accessing DB Layer
-type SomeTypeRepository struct {
+// SomethingTypeRepository is the handle for accessing DB Layer
+type SomethingTypeRepository struct {
 	ctx *db.MainContext
 }
 
-// NewSomeTypeRepository creates a new instance of the Repository
-func NewSomeTypeRepository() *SomeTypeRepository {
-	sr := SomeTypeRepository{ctx: db.Connect()}
+// NewSomethingTypeRepository creates a new instance of the Repository
+func NewSomethingTypeRepository() *SomethingTypeRepository {
+	sr := SomethingTypeRepository{ctx: db.Connect()}
 
 	return &sr
 }
 
-// GetSomeType fetches the user based on PK UUID
-func (_sr SomeTypeRepository) GetSomeType(id uuid.UUID) *entities.SomeType {
-	someType := &entities.SomeType{ID: id}
-	err := _sr.ctx.DB.Select(someType)
+// GetSomethingType fetches the user based on PK UUID
+func (_sr SomethingTypeRepository) GetSomethingType(id uuid.UUID) *entities.SomethingType {
+	somethingType := &entities.SomethingType{ID: id}
+	err := _sr.ctx.DB.Select(somethingType)
 
 	if err != nil {
 		panic(err)
 	}
 
-	return someType
+	return somethingType
 }
 
-// GetSomeTypes fetches all SomeType
-func (_sr SomeTypeRepository) GetSomeTypes() (someTypes []*entities.SomeType) {
-	err := _sr.ctx.DB.Model(&someTypes).Select()
-
-	if err != nil {
-		panic(err)
-	}
-
-	return
-}
-
-// GetSomeTypesOfUser returns all SomeType of the specified User
-func (_sr SomeTypeRepository) GetSomeTypesOfUser(userID uuid.UUID) (someTypes []*entities.SomeType) {
-	someType := &entities.SomeType{CreatedByID: userID}
-	err := _sr.ctx.DB.Model(&someTypes).Select(someType)
+// GetSomethingTypes fetches all SomethingType
+func (_sr SomethingTypeRepository) GetSomethingTypes() (somethingTypes []*entities.SomethingType) {
+	err := _sr.ctx.DB.Model(&somethingTypes).Select()
 
 	if err != nil {
 		panic(err)
@@ -63,27 +51,39 @@ func (_sr SomeTypeRepository) GetSomeTypesOfUser(userID uuid.UUID) (someTypes []
 	return
 }
 
-// CreateSomeType insert data into DB
-func (_sr SomeTypeRepository) CreateSomeType(someType *entities.SomeType) {
-	err := _sr.ctx.DB.Insert(someType)
+// GetSomethingTypesOfUser returns all SomethingType of the specified User
+func (_sr SomethingTypeRepository) GetSomethingTypesOfUser(userID uuid.UUID) (somethingTypes []*entities.SomethingType) {
+	somethingType := &entities.SomethingType{CreatedByID: userID}
+	err := _sr.ctx.DB.Model(&somethingTypes).Select(somethingType)
+
+	if err != nil {
+		panic(err)
+	}
+
+	return
+}
+
+// CreateSomethingType insert data into DB
+func (_sr SomethingTypeRepository) CreateSomethingType(somethingType *entities.SomethingType) {
+	err := _sr.ctx.DB.Insert(somethingType)
 
 	if err != nil {
 		panic(err)
 	}
 }
 
-// UpdateSomeType updates the specified SomeType
-func (_sr SomeTypeRepository) UpdateSomeType(someType *entities.SomeType) {
-	err := _sr.ctx.DB.Update(someType)
+// UpdateSomethingType updates the specified SomethingType
+func (_sr SomethingTypeRepository) UpdateSomethingType(somethingType *entities.SomethingType) {
+	err := _sr.ctx.DB.Update(somethingType)
 
 	if err != nil {
 		panic(err)
 	}
 }
 
-// DeleteSomeType removes the data from DB
-func (_sr SomeTypeRepository) DeleteSomeType(someType *entities.SomeType) {
-	err := _sr.ctx.DB.Delete(someType)
+// DeleteSomethingType removes the data from DB
+func (_sr SomethingTypeRepository) DeleteSomethingType(somethingType *entities.SomethingType) {
+	err := _sr.ctx.DB.Delete(somethingType)
 
 	if err != nil {
 		panic(err)
