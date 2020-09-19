@@ -35,7 +35,7 @@ func NewUser(c echo.Context) error {
 
 	_iurepo.CreateUser(newUser)
 
-	return c.JSON(http.StatusOK, _iurepo.GetUsers())
+	return c.JSON(http.StatusOK, newUser)
 }
 
 // GetUsers returns all users in DB
