@@ -2,8 +2,6 @@ package services
 
 import (
 	"os"
-
-	"github.com/sshanzel/keep-right/domain/entities"
 )
 
 var _config = "config"
@@ -28,17 +26,17 @@ func GetDbName() string {
 		panic(err)
 	}
 
-	var config entities.Config
-
 	doc, err := client.Collection(_config).Doc(_dbname).Get(_ctx)
-
-	if err == nil {
+	if err != nil {
 		return ""
 	}
 
-	doc.DataTo(config)
+	data := doc.Data()
+	if data == nil {
+		return ""
+	}
 
-	return config.Value
+	return data["value"].(string)
 }
 
 // GetDbAddr returns GetDbAddr
@@ -48,57 +46,55 @@ func GetDbAddr() string {
 	}
 
 	app, err := GetFirebaseApp()
-
 	if err != nil {
 		panic(err)
 	}
+
 	client, err := app.Firestore(_ctx)
-
 	if err != nil {
 		panic(err)
 	}
-
-	var config entities.Config
 
 	doc, err := client.Collection(_config).Doc(_dbaddr).Get(_ctx)
-
-	if err == nil {
+	if err != nil {
 		return ""
 	}
 
-	doc.DataTo(config)
+	data := doc.Data()
+	if data == nil {
+		return ""
+	}
 
-	return config.Value
+	return data["value"].(string)
 }
 
-// GetDbUser returns GetDbUser
-func GetDbUser() string {
+// GetDbUsername returns GetDbUsername
+func GetDbUsername() string {
 	if os.Getenv("GAE_ENV") == "" {
 		return ""
 	}
 
 	app, err := GetFirebaseApp()
-
 	if err != nil {
 		panic(err)
 	}
+
 	client, err := app.Firestore(_ctx)
-
 	if err != nil {
 		panic(err)
 	}
-
-	var config entities.Config
 
 	doc, err := client.Collection(_config).Doc(_dbuser).Get(_ctx)
-
-	if err == nil {
+	if err != nil {
 		return ""
 	}
 
-	doc.DataTo(config)
+	data := doc.Data()
+	if data == nil {
+		return ""
+	}
 
-	return config.Value
+	return data["value"].(string)
 }
 
 // GetDbPassword returns GetDbPassword
@@ -108,25 +104,24 @@ func GetDbPassword() string {
 	}
 
 	app, err := GetFirebaseApp()
-
 	if err != nil {
 		panic(err)
 	}
+
 	client, err := app.Firestore(_ctx)
-
 	if err != nil {
 		panic(err)
 	}
-
-	var config entities.Config
 
 	doc, err := client.Collection(_config).Doc(_dbpassword).Get(_ctx)
-
-	if err == nil {
+	if err != nil {
 		return ""
 	}
 
-	doc.DataTo(config)
+	data := doc.Data()
+	if data == nil {
+		return ""
+	}
 
-	return config.Value
+	return data["value"].(string)
 }

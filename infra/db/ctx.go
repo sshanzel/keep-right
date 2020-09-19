@@ -21,17 +21,17 @@ func getConnStr() (conn *connStr) {
 		addr = ":5432"
 	}
 
-	username := services.GetDbAddr()
+	username := services.GetDbUsername()
 	if username == "" {
 		username = "postgres"
 	}
 
-	password := services.GetDbAddr()
+	password := services.GetDbPassword()
 	if password == "" {
 		password = "dr0w$$Ap"
 	}
 
-	db := services.GetDbAddr()
+	db := services.GetDbName()
 	if db == "" {
 		db = "keep-right"
 	}
