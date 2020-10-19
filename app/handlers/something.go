@@ -42,3 +42,15 @@ func NewSomething(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, newSmthng)
 }
+
+// GetSomethings is the handler for POSTing Something
+func GetSomethings(c echo.Context) error {
+	token, err := GetFirebaseToken(c.Request())
+
+	user, err := _iurepo.GetUserByUID(token.UID)
+
+	if err != nil {
+		return c.JSON(http.StatusNotFound, "User not found!")
+	}
+	return c.JSON(http.StatusOK, _isrepo.GetSomethingsOfUser(user.ID))
+}
