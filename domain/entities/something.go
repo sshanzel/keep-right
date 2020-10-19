@@ -18,7 +18,7 @@ type Something struct {
 }
 
 // NewSomething creates a new instance of Something!
-func NewSomething(title, description string, somethingTypeID, insideOfID, createdByID uuid.UUID) *Something {
+func NewSomething(title, description string, insideOfID, somethingTypeID, createdByID uuid.UUID) *Something {
 	s := Something{uuid.New(), title, description, insideOfID, nil, somethingTypeID, nil, createdByID, nil}
 
 	return &s
