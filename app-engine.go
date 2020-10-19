@@ -13,6 +13,7 @@ import (
 
 func createMux() *echo.Echo {
 	handlers.NewUserHandler(repository.NewUserRepository())
+	handlers.NewSomethingHandler(repository.NewSomethingRepository())
 
 	e := echo.New()
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
@@ -25,10 +26,14 @@ func createMux() *echo.Echo {
 	u := api.Group("/users")
 
 	u.Use(middlewares.Authorize)
-	u.GET("", handlers.GetUsers)
 	u.GET("/me", handlers.GetUser)
 	u.GET("/:id", handlers.GetUserByID)
 	u.POST("", handlers.NewUser)
+
+	s := api.Group("/somethings")
+	s.GET("", handlers.GetSomethings)
+	s.POST("", handlers.NewSomething)
+	s.PATCH("/:id", handlers.UpdateSomething)
 
 	return e
 }
