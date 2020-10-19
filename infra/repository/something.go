@@ -11,9 +11,9 @@ type ISomethingRepository interface {
 	GetSomething(id uuid.UUID) *entities.Something
 	GetSomethings() (somethings []*entities.Something)
 	GetSomethingsOfUser(userID uuid.UUID) (somethings []*entities.Something)
-	CreateSomething(something entities.Something) *entities.Something
-	UpdateSomething(something entities.Something)
-	DeleteSomething(something entities.Something)
+	CreateSomething(something *entities.Something) *entities.Something
+	UpdateSomething(something *entities.Something)
+	DeleteSomething(something *entities.Something)
 }
 
 // SomethingRepository is the handle for accessing DB Layer
@@ -64,12 +64,14 @@ func (_sr SomethingRepository) GetSomethingsOfUser(userID uuid.UUID) (somethings
 }
 
 // CreateSomething insert data into DB
-func (_sr SomethingRepository) CreateSomething(something *entities.Something) {
+func (_sr SomethingRepository) CreateSomething(something *entities.Something) *entities.Something {
 	err := _sr.ctx.DB.Insert(something)
 
 	if err != nil {
 		panic(err)
 	}
+
+	return something
 }
 
 // UpdateSomething updates the specified Something

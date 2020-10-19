@@ -38,7 +38,7 @@ func NewSomething(c echo.Context) error {
 
 	newSmthng := entities.NewSomething(smthng.Title, smthng.Description, smthng.InsideOfID, smthng.SomethingTypeID, user.ID)
 
-	_isrepo.CreateSomething(*newSmthng)
+	_isrepo.CreateSomething(newSmthng)
 
 	return c.JSON(http.StatusOK, newSmthng)
 }
