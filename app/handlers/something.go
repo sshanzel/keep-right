@@ -14,7 +14,7 @@ var _isrepo repository.ISomethingRepository
 
 // NewSomethingHandler is the constructor of SomethingHandlers
 func NewSomethingHandler(isrepo repository.ISomethingRepository) {
-	if isrepo != nil {
+	if _isrepo != nil {
 		return
 	}
 
@@ -79,5 +79,6 @@ func GetSomethings(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusNotFound, "User not found!")
 	}
+
 	return c.JSON(http.StatusOK, _isrepo.GetSomethingsOfUser(user.ID))
 }
