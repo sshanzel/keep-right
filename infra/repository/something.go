@@ -57,7 +57,9 @@ func (_sr SomethingRepository) GetSomethingsOfUser(userID uuid.UUID) (somethings
 	err := _sr.ctx.DB.Model(&somethings).Select(something)
 
 	if err != nil {
-		panic(err)
+		// log the error
+		println(err.Error()) // debugging
+		somethings = []*entities.Something{}
 	}
 
 	return
